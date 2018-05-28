@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.cesgroup.user.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="org.cesgroup.user.entity.User">
+    <id column="cid" jdbcType="VARCHAR" property="cid" />
+    <result column="pid" jdbcType="VARCHAR" property="pid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    cid, pid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mybatis
+    where cid = #{cid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from mybatis
+    where cid = #{cid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteAllUsers" parameterType="java.lang.String">
+    delete from mybatis
+  </delete>
+  <insert id="insert" parameterType="org.cesgroup.user.entity.User">
+    insert into mybatis (cid, pid)
+    values (#{cid,jdbcType=VARCHAR}, #{pid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.cesgroup.user.entity.User">
+    insert into mybatis
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        cid,
+      </if>
+      <if test="pid != null">
+        pid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        #{cid,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null">
+        #{pid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.cesgroup.user.entity.User">
+    update mybatis
+    <set>
+      <if test="pid != null">
+        pid = #{pid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cid = #{cid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.cesgroup.user.entity.User">
+    update mybatis
+    set pid = #{pid,jdbcType=VARCHAR}
+    where cid = #{cid,jdbcType=VARCHAR}
+  </update>
+</mapper>
